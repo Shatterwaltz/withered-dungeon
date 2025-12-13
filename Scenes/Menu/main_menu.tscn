@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://cujgdkol6u8s0"]
+
+[ext_resource type="Script" uid="uid://crvu468qd3fg0" path="res://Scripts/Menu/main_menu.gd" id="1_bkwd7"]
+
+[node name="MainMenu" type="VBoxContainer" node_paths=PackedStringArray("connect_button", "ready_button")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+script = ExtResource("1_bkwd7")
+connect_button = NodePath("ConnectBtn")
+ready_button = NodePath("ReadyBtn")
+
+[node name="ConnectBtn" type="Button" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Connect"
+
+[node name="ReadyBtn" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Ready"
+
+[node name="Spacer" type="Control" parent="."]
+custom_minimum_size = Vector2(300, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="IpInput" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "localhost"
+alignment = 1
