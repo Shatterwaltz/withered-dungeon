@@ -1,0 +1,8 @@
+extends Node
+class_name Level
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if Network.is_server:
+		for player_id in Network.players.keys():
+			ToClientRpcs.spawn_player.rpc(player_id)

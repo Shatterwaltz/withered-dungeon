@@ -67,4 +67,4 @@ func toggle_ready(player_id: int) -> void:
 
 func start_game():
 	## Game start logic
-	pass
+	ToClientRpcs.change_scene.rpc()

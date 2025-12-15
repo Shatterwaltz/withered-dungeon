@@ -15,4 +15,4 @@ func _physics_process(_delta):
 		var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 		velocity = direction * speed
 		move_and_slide()
-		ToServerRpcs.update_position(position)
+		ToServerRpcs.update_position.rpc_id(1, position)

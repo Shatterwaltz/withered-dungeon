@@ -8,4 +8,4 @@ func toggle_ready() -> void:
 
 @rpc("any_peer", "unreliable_ordered")
 func update_position(position: Vector2) -> void:
-	pass
+	ToClientRpcs.update_player.rpc(multiplayer.get_remote_sender_id(), position)
