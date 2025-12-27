@@ -21,3 +21,9 @@ func update_player(id: int, position: Vector2) -> void:
 	var player: Player = Gamestate.players[id]
 	if player.is_puppet:
 		player.position = position
+
+@rpc("authority", "call_local", "reliable")
+func fire_weapon(player_id: int, target: Vector2):
+	var player: Player = Gamestate.players[player_id]
+	if player.is_puppet:
+		player.weapon.fire(target)

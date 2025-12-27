@@ -2,13 +2,18 @@ extends CharacterBody2D
 class_name Player
 
 var network_data: NetPlayer
-var speed: float = 500
-var local_id: int
 var is_puppet: bool
 
+var speed: float = 500
+
+var weapon: Weapon
+
 func _ready():
-	local_id = multiplayer.get_unique_id()
-	is_puppet = network_data.id != local_id
+	is_puppet = network_data.id != multiplayer.get_unique_id()
+	var bow: Bow = Bow.new()
+	bow.is_puppet = is_puppet
+	weapon = bow
+	add_child(bow)
 
 func _physics_process(_delta):
 	if !is_puppet:
