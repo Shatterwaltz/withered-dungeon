@@ -11,7 +11,7 @@ var shot_timer: float = 0
 func fire(target: Vector2)
 
 func _input(_event):
-	if Input.is_action_just_pressed("fire_weapon") && shot_timer <= 0 && !is_puppet:
+	if Input.is_action_pressed("fire_weapon") && shot_timer <= 0 && !is_puppet:
 		shot_timer = shot_cd
 		var target: Vector2 = get_global_mouse_position()
 		fire(target)
