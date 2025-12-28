@@ -10,7 +10,7 @@ var weapon: Weapon
 
 func _ready():
 	is_puppet = network_data.id != multiplayer.get_unique_id()
-	var bow: Bow = Bow.new()
+	var bow: Bow = Constants.weapon_map[Constants.WEAPONS.BOW].instantiate() as Bow
 	bow.is_puppet = is_puppet
 	weapon = bow
 	add_child(bow)
@@ -20,4 +20,4 @@ func _physics_process(_delta):
 		var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 		velocity = direction * speed
 		move_and_slide()
-		ToServerRpcs.update_position.rpc_id(1, position)
+		ToServerRpcs.update_position.rpc_id(1, position, get_global_mouse_position())

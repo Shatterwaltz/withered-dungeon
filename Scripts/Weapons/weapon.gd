@@ -20,3 +20,5 @@ func _input(_event):
 func _physics_process(delta):
 	if shot_timer > 0:
 		shot_timer -= delta
+	if !is_puppet:
+		look_at(get_global_mouse_position())

@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://br0p2feb7uqby"]
 
-[ext_resource type="Script" uid="uid://kcg57c6dncdk" path="res://Scripts/Weapons/Bow/arrow.gd" id="1_svx5y"]
-[ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_wgnvn"]
+[ext_resource type="Script" uid="uid://kcg57c6dncdk" path="res://Scripts/Weapons/Bow/arrow.gd" id="1_homg2"]
+[ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_fqiyw"]
 
 [node name="Arrow" type="CharacterBody2D"]
-script = ExtResource("1_svx5y")
+script = ExtResource("1_homg2")
 
 [node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2(1.078125, 0.3359375)
-texture = ExtResource("2_wgnvn")
+texture = ExtResource("2_fqiyw")
