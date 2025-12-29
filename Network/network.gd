@@ -15,6 +15,7 @@ func _ready() -> void:
 	is_server = OS.has_feature("dedicated_server")
 	var creation_error: Error
 	if is_server:
+		Gamestate.seed_val = randi()
 		# Create server.
 		peer = ENetMultiplayerPeer.new()
 		creation_error = peer.create_server(PORT, MAX_CLIENTS)
@@ -67,4 +68,5 @@ func toggle_ready(player_id: int) -> void:
 
 func start_game():
 	## Game start logic
+	ToClientRpcs.set_seed.rpc(Gamestate.seed_val)
 	ToClientRpcs.change_scene.rpc()

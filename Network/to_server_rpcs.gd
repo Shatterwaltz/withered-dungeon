@@ -18,3 +18,7 @@ func fire_weapon(target: Vector2) -> void:
 func swap_weapon(new_weapon: Constants.WEAPONS):
 	var sender_id: int = multiplayer.get_remote_sender_id()
 	ToClientRpcs.swap_weapon.rpc(sender_id, new_weapon)
+
+@rpc("any_peer", "reliable")
+func damage_enemy(id: int, damage: int):
+	ToClientRpcs.damage_enemy.rpc(id, damage)

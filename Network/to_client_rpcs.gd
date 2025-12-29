@@ -5,6 +5,11 @@ const PLAYER = preload("uid://bicgmnxc0j4bc")
 func change_scene() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Levels/debug_area.tscn")
 
+@rpc("authority", "call_remote", "reliable")
+func set_seed(seed_val: int):
+	Gamestate.seed_val = seed_val
+	seed(seed_val)
+
 @rpc("authority", "call_local", "reliable")
 func spawn_player(id: int) -> void:
 	var player: Player = PLAYER.instantiate() as Player
@@ -36,3 +41,24 @@ func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
 		player = Gamestate.players[player_id]
 		if player.is_puppet:
 			player.equip_weapon(new_weapon)
+
+@rpc("authority", "call_local", "reliable")
+func spawn_enemy(id: int, enemy_type: Constants.ENEMIES):
+	var enemy: Enemy = Enemy.with_data(Constants.enemy_map[enemy_type], id)
+	enemy.position = Vector2(25, 25)
+	get_tree().root.add_child(enemy)
+
+@rpc("authority", "call_local", "reliable")
+func trigger_enemy_attack(id: int, target_id: int):
+	if Gamestate.enemies.has(id):
+		Gamestate.enemies[id].trigger_attack(Gamestate.players[target_id])
+
+@rpc("authority", "call_local", "reliable")
+func trigger_enemy_death(id: int):
+	if Gamestate.enemies.has(id):
+		Gamestate.enemies[id].die()
+
+@rpc("authority", "call_local", "reliable")
+func damage_enemy(id: int, damage: int):
+	if Gamestate.enemies.has(id):
+		Gamestate.enemies[id].take_damage(damage)

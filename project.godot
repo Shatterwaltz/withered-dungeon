@@ -26,6 +26,7 @@ Gamestate="*res://Scripts/Game/gamestate.gd"
 
 folder_colors={
 "res://Network/": "gray",
+"res://Resources/": "red",
 "res://Scenes/": "purple",
 "res://Scripts/": "green"
 }
