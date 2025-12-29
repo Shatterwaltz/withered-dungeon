@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://4e31saikmsdk"]
+
+[ext_resource type="Script" uid="uid://dpuwkiui0tsqt" path="res://Scripts/Weapons/Sword/sword.gd" id="1_t3vok"]
+[ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_ei55o"]
+
+[node name="Sword" type="Node2D"]
+script = ExtResource("1_t3vok")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(115, 4)
+scale = Vector2(1.7890625, 0.2890625)
+texture = ExtResource("2_ei55o")

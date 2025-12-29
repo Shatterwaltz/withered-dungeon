@@ -35,3 +35,7 @@ func equip_weapon(weapon_name: Constants.WEAPONS):
 		weapon.queue_free()
 	weapon = new_weapon
 	add_child(weapon)
+
+func _input(_event):
+	if Input.is_action_just_pressed("equip_1") && !is_puppet:
+		equip_weapon(Constants.WEAPONS.SWORD)
