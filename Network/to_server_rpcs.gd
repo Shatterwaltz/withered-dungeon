@@ -13,3 +13,8 @@ func update_position(position: Vector2, target: Vector2) -> void:
 @rpc("any_peer", "reliable")
 func fire_weapon(target: Vector2) -> void:
 	ToClientRpcs.fire_weapon.rpc(multiplayer.get_remote_sender_id(), target)
+
+@rpc("any_peer", "reliable")
+func swap_weapon(new_weapon: Constants.WEAPONS):
+	var sender_id: int = multiplayer.get_remote_sender_id()
+	ToClientRpcs.swap_weapon.rpc(sender_id, new_weapon)

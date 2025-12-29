@@ -15,16 +15,24 @@ func spawn_player(id: int) -> void:
 	Gamestate.add_child(player)
 
 @rpc("authority", "call_local", "unreliable_ordered")
-func update_player(id: int, position: Vector2, target: Vector2) -> void:
-	if !Gamestate.players.has(id):
+func update_player(player_id: int, position: Vector2, target: Vector2) -> void:
+	if !Gamestate.players.has(player_id):
 		return
-	var player: Player = Gamestate.players[id]
-	if player.is_puppet:
-		player.position = position
-		player.weapon.look_at(target)
+	var player: Player = Gamestate.players[player_id]
+	player.update_player(position, target)
 
 @rpc("authority", "call_local", "reliable")
 func fire_weapon(player_id: int, target: Vector2):
 	var player: Player = Gamestate.players[player_id]
 	if player.is_puppet:
 		player.weapon.fire(target)
+
+@rpc("authority", "call_local", "reliable")
+func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
+	var player: Player
+	if !Gamestate.players.has(player_id):
+		return
+	else:
+		player = Gamestate.players[player_id]
+		if player.is_puppet:
+			player.equip_weapon(new_weapon)
