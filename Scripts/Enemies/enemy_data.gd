@@ -9,4 +9,7 @@ class_name EnemyData
 @export var attack: PackedScene
 # time in seconds between attack triggers
 @export var attack_rate: float = 5
+# sprite texture
 @export var sprite: Texture2D
+# hitbox dimensions
+@export var size: Vector2

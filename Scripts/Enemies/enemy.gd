@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Enemy
 
+const ENEMY = preload("uid://kjpcet4hpt5j")
+
 var id: int
 var is_puppet: bool
 
@@ -10,26 +12,32 @@ var movespeed: float
 var attack: PackedScene
 var attack_rate: float
 var attack_timer: float = 0
-var sprite: Sprite2D
+var sprite_tex: Texture2D
+var collision_shape: RectangleShape2D
+
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var hitbox: CollisionShape2D = $Area2D/CollisionShape2D
 
 # Factory function
-static func with_data(enemy_data: EnemyData, p_id: int) -> Enemy:
-	var enemy: Enemy = Enemy.new()
+static func from_data(enemy_data: EnemyData, p_id: int) -> Enemy:
+	var enemy: Enemy = ENEMY.instantiate()
 	enemy.id = p_id
 	enemy.hp = enemy_data.hp
 	enemy.movespeed = enemy_data.movespeed
 	enemy.attack = enemy_data.attack
 	enemy.attack_rate = enemy_data.attack_rate
-	var enemy_sprite: Sprite2D = Sprite2D.new()
-	enemy_sprite.texture = enemy_data.sprite
-	enemy.sprite = enemy_sprite
-	enemy.add_child(enemy_sprite)
+	enemy.sprite_tex = enemy_data.sprite
+	var hitbox_shape: RectangleShape2D = RectangleShape2D.new()
+	hitbox_shape.size = enemy_data.size
+	enemy.collision_shape = hitbox_shape
 	return enemy
 
 func _ready():
 	#enemies are always puppets on clients
 	is_puppet = !Network.is_server
 	Gamestate.enemies[id] = self
+	sprite.texture = sprite_tex
+	hitbox.shape = collision_shape
 	if !is_puppet:
 		target = Gamestate.players.values().pick_random()
 

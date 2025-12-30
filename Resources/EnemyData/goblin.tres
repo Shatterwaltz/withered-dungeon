@@ -8,4 +8,5 @@
 script = ExtResource("1_661rc")
 attack = ExtResource("1_fq2no")
 sprite = ExtResource("3_dhdi6")
+size = Vector2(128, 128)
 metadata/_custom_type_script = "uid://bp7bdf6oifen0"

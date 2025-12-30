@@ -44,7 +44,7 @@ func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
 
 @rpc("authority", "call_local", "reliable")
 func spawn_enemy(id: int, enemy_type: Constants.ENEMIES):
-	var enemy: Enemy = Enemy.with_data(Constants.enemy_map[enemy_type], id)
+	var enemy: Enemy = Enemy.from_data(Constants.enemy_map[enemy_type], id)
 	enemy.position = Vector2(25, 25)
 	get_tree().root.add_child(enemy)
 
