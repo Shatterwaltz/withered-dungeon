@@ -16,7 +16,7 @@ var sprite_tex: Texture2D
 var collision_shape: RectangleShape2D
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hitbox: CollisionShape2D = $Area2D/CollisionShape2D
+@onready var hitbox: CollisionShape2D = $CollisionShape2D
 
 # Factory function
 static func from_data(enemy_data: EnemyData, p_id: int) -> Enemy:

@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_fqiyw"]
 
 [node name="Arrow" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 3
 script = ExtResource("1_homg2")
 
 [node name="sprite" type="Sprite2D" parent="."]
