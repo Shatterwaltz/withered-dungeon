@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://br0p2feb7uqby"]
+[gd_scene load_steps=4 format=3 uid="uid://br0p2feb7uqby"]
 
 [ext_resource type="Script" uid="uid://kcg57c6dncdk" path="res://Scripts/Weapons/Bow/arrow.gd" id="1_homg2"]
 [ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_fqiyw"]
 
-[node name="Arrow" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_homg2"]
+size = Vector2(132, 41)
+
+[node name="Arrow" type="Area2D"]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_homg2")
@@ -11,3 +14,7 @@ script = ExtResource("1_homg2")
 [node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2(1.078125, 0.3359375)
 texture = ExtResource("2_fqiyw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_homg2")

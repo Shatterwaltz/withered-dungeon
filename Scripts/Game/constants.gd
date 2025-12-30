@@ -7,15 +7,15 @@ enum WEAPONS {
 	SWORD
 }
 
-static var weapon_map: Dictionary[WEAPONS, PackedScene] = {
-	WEAPONS.BOW: preload("uid://cc6efc5h88mi8"),
-	WEAPONS.SWORD: preload("uid://4e31saikmsdk")
+static var weapon_map: Dictionary[WEAPONS, String] = {
+	WEAPONS.BOW: "uid://d38inb5tt1ykl",
+	WEAPONS.SWORD: "uid://4e31saikmsdk"
 }
 
 enum ENEMIES {
 	GOBLIN
 }
 
-static var enemy_map: Dictionary[ENEMIES, EnemyData] = {
-	ENEMIES.GOBLIN: preload("uid://22rvn5syg5ku")
+static var enemy_map: Dictionary[ENEMIES, String] = {
+	ENEMIES.GOBLIN: "uid://22rvn5syg5ku"
 }

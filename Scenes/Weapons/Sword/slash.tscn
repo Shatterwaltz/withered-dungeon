@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="1_7jklp"]
 [ext_resource type="Script" uid="uid://oreu46hpxist" path="res://Scripts/Weapons/Sword/slash.gd" id="1_ou2a3"]
 
-[node name="Slash" type="CharacterBody2D"]
+[node name="Slash" type="Area2D"]
 script = ExtResource("1_ou2a3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

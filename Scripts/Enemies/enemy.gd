@@ -1,11 +1,14 @@
 extends CharacterBody2D
 class_name Enemy
 
-const ENEMY = preload("uid://kjpcet4hpt5j")
+# scene for factory function
+const ENEMY: PackedScene = preload("uid://kjpcet4hpt5j")
 
+# network data
 var id: int
 var is_puppet: bool
 
+# loaded from EnemyData
 var target: Player
 var hp: int
 var movespeed: float
@@ -15,6 +18,7 @@ var attack_timer: float = 0
 var sprite_tex: Texture2D
 var collision_shape: RectangleShape2D
 
+# Node refs
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var hitbox: CollisionShape2D = $CollisionShape2D
 
@@ -55,8 +59,11 @@ func trigger_attack(p_target: Player):
 
 func take_damage(damage: int):
 	hp = clampi(hp - damage, 0, Constants.BIG_INT)
+	print(hp)
 	if hp <= 0 && !is_puppet:
+		print('dying')
 		ToClientRpcs.trigger_enemy_death.rpc(id)
 
 func die():
 	Gamestate.enemies.erase(id)
+	queue_free()

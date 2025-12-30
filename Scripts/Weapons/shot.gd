@@ -1,5 +1,5 @@
 @abstract
-extends CharacterBody2D
+extends Area2D
 class_name Shot
 
 var is_puppet: bool = false

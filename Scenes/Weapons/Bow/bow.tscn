@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc6efc5h88mi8"]
+[gd_scene load_steps=3 format=3 uid="uid://d38inb5tt1ykl"]
 
 [ext_resource type="Script" uid="uid://dxjqc57jb1sof" path="res://Scripts/Weapons/Bow/bow.gd" id="1_0umu2"]
 [ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="1_xd08i"]
