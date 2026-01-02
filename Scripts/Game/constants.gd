@@ -19,3 +19,19 @@ enum ENEMIES {
 static var enemy_map: Dictionary[ENEMIES, String] = {
 	ENEMIES.GOBLIN: "uid://22rvn5syg5ku"
 }
+
+enum LEVELS {
+	DEBUG_LEVEL
+}
+
+static var level_map: Dictionary[LEVELS, String] = {
+	LEVELS.DEBUG_LEVEL: "uid://b44cymtw8l0qw"
+}
+
+enum LAYOUTS {
+	DEBUG_DUNGEON
+}
+
+static var layout_map: Dictionary[LAYOUTS, String] = {
+	LAYOUTS.DEBUG_DUNGEON: "uid://dbm0qqk021s52"
+}

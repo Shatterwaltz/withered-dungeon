@@ -1,11 +1,11 @@
 extends Node
 class_name Level
 
-@export var enemy_pool: Array[Constants.ENEMIES] = []
+var layout: Layout
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	if Network.is_server:
-		for player_id in Network.players.keys():
-			ToClientRpcs.spawn_player.rpc(player_id)
-		ToClientRpcs.spawn_enemy.rpc(Utils.generate_id(), Constants.ENEMIES.GOBLIN)
+# factory function
+static func from_data(level_data: LevelData) -> Level:
+	var level: Level = Level.new()
+	level.layout = load(Constants.layout_map[level_data.layout_pool.pick_random()]).instantiate()
+	level.layout.target_enemy_count = randi_range(level_data.min_enemies, level_data.max_enemies)
+	return level

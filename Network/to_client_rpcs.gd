@@ -11,11 +11,12 @@ func set_seed(seed_val: int):
 	seed(seed_val)
 
 @rpc("authority", "call_local", "reliable")
-func spawn_player(id: int) -> void:
+func spawn_player(id: int, position: Vector2) -> void:
 	var player: Player = PLAYER.instantiate() as Player
 	var net_data = NetPlayer.new()
 	net_data.id = id
 	player.network_data = net_data
+	player.position = position
 	Gamestate.players[id] = player
 	Gamestate.add_child(player)
 
@@ -43,9 +44,9 @@ func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
 			player.equip_weapon(new_weapon)
 
 @rpc("authority", "call_local", "reliable")
-func spawn_enemy(id: int, enemy_type: Constants.ENEMIES):
+func spawn_enemy(id: int, enemy_type: Constants.ENEMIES, position: Vector2):
 	var enemy: Enemy = Enemy.from_data(load(Constants.enemy_map[enemy_type]), id)
-	enemy.position = Vector2(200, 200)
+	enemy.position = position
 	get_tree().root.add_child(enemy)
 
 @rpc("authority", "call_local", "reliable")
