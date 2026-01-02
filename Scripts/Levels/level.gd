@@ -1,6 +1,8 @@
 extends Node
 class_name Level
 
+@export var enemy_pool: Array[Constants.ENEMIES] = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if Network.is_server:

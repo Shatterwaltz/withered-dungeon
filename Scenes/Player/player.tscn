@@ -1,19 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://bicgmnxc0j4bc"]
+[gd_scene load_steps=5 format=3 uid="uid://bicgmnxc0j4bc"]
 
 [ext_resource type="Script" uid="uid://cn6dmpooc6h1v" path="res://Scripts/Player/player.gd" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://dqedq1w5iq5qw" path="res://icon.svg" id="2_xpcdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mtuoh"]
-size = Vector2(50, 50)
+size = Vector2(128, 128)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_a3d8c"]
+radius = 8.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("camera")]
 collision_layer = 4
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_a3d8c")
+camera = NodePath("Camera2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_xpcdj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PhysicsCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_mtuoh")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
+
+[node name="ShotCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShotCollision"]
+shape = SubResource("CircleShape2D_a3d8c")

@@ -5,13 +5,15 @@ var network_data: NetPlayer
 var is_puppet: bool
 
 var speed: float = 500
-
 var weapon: Weapon
+
+@export var camera: Camera2D
 
 func _ready():
 	is_puppet = network_data.id != multiplayer.get_unique_id()
 	if !is_puppet:
 		equip_weapon(Constants.WEAPONS.BOW)
+		camera.enabled = true
 
 func _physics_process(_delta):
 	if !is_puppet:
