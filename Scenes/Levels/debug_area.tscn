@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://dbm0qqk021s52"]
+[gd_scene load_steps=6 format=4 uid="uid://dbm0qqk021s52"]
 
 [ext_resource type="Script" uid="uid://xklbyqy7743w" path="res://Scripts/Levels/layout.gd" id="1_n35g8"]
 [ext_resource type="Texture2D" uid="uid://byv736yhquuqt" path="res://Resources/Sprites/Background/dungeon_terrain.png" id="2_n35g8"]
@@ -19,10 +19,15 @@ tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_u8adk")
 
-[node name="DebugArea" type="Node2D" node_paths=PackedStringArray("enemy_spawn_parent", "player_spawn")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n35g8"]
+size = Vector2(128, 128)
+
+[node name="DebugArea" type="Node2D" node_paths=PackedStringArray("enemy_spawn_parent", "player_spawn", "tilemap", "exit_box")]
 script = ExtResource("1_n35g8")
 enemy_spawn_parent = NodePath("EnemySpawnParent")
 player_spawn = NodePath("PlayerSpawn")
+tilemap = NodePath("TileMapLayer")
+exit_box = NodePath("ExitTile")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
@@ -38,5 +43,15 @@ position = Vector2(-190, -435)
 [node name="Node2D2" type="Node2D" parent="EnemySpawnParent"]
 position = Vector2(339, -442)
 
+[node name="Node2D3" type="Node2D" parent="EnemySpawnParent"]
+position = Vector2(81, -626)
+
 [node name="PlayerSpawn" type="Node2D" parent="."]
 position = Vector2(73, 230)
+
+[node name="ExitTile" type="Area2D" parent="."]
+position = Vector2(88, -785)
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitTile"]
+shape = SubResource("RectangleShape2D_n35g8")

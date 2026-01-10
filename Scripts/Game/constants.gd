@@ -1,6 +1,7 @@
 class_name Constants
 
 const BIG_INT: int = 999999999
+const TILE_SIZE: int = 128
 
 enum WEAPONS {
 	BOW,

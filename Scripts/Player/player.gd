@@ -29,7 +29,6 @@ func update_player(p_position: Vector2, target: Vector2):
 		position = p_position
 
 func equip_weapon(weapon_name: Constants.WEAPONS):
-	print(Constants.weapon_map)
 	if !is_puppet:
 		ToServerRpcs.swap_weapon.rpc_id(1, weapon_name)
 	var new_weapon: Weapon = load(Constants.weapon_map[weapon_name]).instantiate() as Weapon
