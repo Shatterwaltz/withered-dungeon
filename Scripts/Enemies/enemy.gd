@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Enemy
 
+signal enemy_died(id: int)
+
 # scene for factory function
 const ENEMY: PackedScene = preload("uid://kjpcet4hpt5j")
 

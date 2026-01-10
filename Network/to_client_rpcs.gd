@@ -5,6 +5,12 @@ const PLAYER = preload("uid://bicgmnxc0j4bc")
 func change_scene() -> void:
 	get_tree().change_scene_to_file("res://Scenes/Levels/debug_area.tscn")
 
+@rpc("authority", "call_local", "reliable")
+func load_level(level: Constants.LEVELS) -> void:
+	var level_data: LevelData = load(Constants.level_map[level]) as LevelData
+	var layout: Layout = Layout.from_data(level_data)
+	Gamestate.add_child(layout)
+
 @rpc("authority", "call_remote", "reliable")
 func set_seed(seed_val: int):
 	Gamestate.seed_val = seed_val

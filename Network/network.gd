@@ -69,4 +69,4 @@ func toggle_ready(player_id: int) -> void:
 func start_game():
 	## Game start logic
 	ToClientRpcs.set_seed.rpc(Gamestate.seed_val)
-	ToClientRpcs.change_scene.rpc()
+	ToClientRpcs.load_level(Constants.LEVELS.DEBUG_LEVEL)

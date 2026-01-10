@@ -19,8 +19,10 @@ tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_u8adk")
 
-[node name="DebugArea" type="Node2D"]
+[node name="DebugArea" type="Node2D" node_paths=PackedStringArray("enemy_spawn_parent", "player_spawn")]
 script = ExtResource("1_n35g8")
+enemy_spawn_parent = NodePath("EnemySpawnParent")
+player_spawn = NodePath("PlayerSpawn")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
