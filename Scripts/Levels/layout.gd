@@ -10,6 +10,7 @@ var target_enemy_count: int = 1
 var next_level: Constants.LEVELS
 var remaining_enemies: int = 0
 var next_layout_id: int = -1
+var players_exited: int = 0
 
 # factory function
 static func from_data(level_data: LevelData, layout_index: int, layout_id: int) -> Layout:
@@ -60,10 +61,14 @@ func activate_room():
 
 func _on_enemy_death(_id: int):
 	remaining_enemies -= 1
-	if remaining_enemies <= 0 && Network.is_server:
-		ToClientRpcs.activate_layout.rpc(next_layout_id)
-	#TODO: Unlock exit to next level
+	if remaining_enemies <= 0:
+		exit_box.visible = true
+		if Network.is_server:
+			ToClientRpcs.activate_layout.rpc(next_layout_id)
 
 func _on_exit_overlap(body):
 	if body is Player && remaining_enemies <= 0:
 		body.position = Gamestate.loaded_layouts[next_layout_id].player_spawn.global_position
+		players_exited += 1
+		if players_exited >= Gamestate.players.size():
+			queue_free()

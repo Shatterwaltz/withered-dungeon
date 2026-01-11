@@ -68,8 +68,8 @@ func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
 @rpc("authority", "call_local", "reliable")
 func spawn_enemy(id: int, enemy_type: Constants.ENEMIES, position: Vector2, layout_id: int):
 	var enemy: Enemy = Enemy.from_data(load(Constants.enemy_map[enemy_type]), id)
-	Gamestate.loaded_layouts[layout_id].add_enemy(enemy)
 	enemy.position = position
+	Gamestate.loaded_layouts[layout_id].add_enemy(enemy)
 
 @rpc("authority", "call_local", "reliable")
 func trigger_enemy_attack(id: int, target_id: int):
