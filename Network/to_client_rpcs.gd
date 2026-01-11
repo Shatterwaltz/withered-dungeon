@@ -10,10 +10,9 @@ func unload_scene() -> void:
 	get_tree().unload_current_scene()
 
 @rpc("authority", "call_local", "reliable")
-func load_level(level: Constants.LEVELS, layout_id: int) -> void:
-	print("load on %s,%s" % [layout_id, multiplayer.get_unique_id()])
+func load_level(level: Constants.LEVELS, layout_index: int, layout_id: int) -> void:
 	var level_data: LevelData = load(Constants.level_map[level]) as LevelData
-	var layout: Layout = Layout.from_data(level_data, layout_id)
+	var layout: Layout = Layout.from_data(level_data, layout_index, layout_id)
 	layout.position.y += Gamestate.level_load_offset
 	Gamestate.level_load_offset += layout.tilemap.get_used_rect().size.y * Constants.TILE_SIZE
 	Gamestate.loaded_layouts[layout.id] = layout
@@ -68,10 +67,9 @@ func swap_weapon(player_id: int, new_weapon: Constants.WEAPONS):
 
 @rpc("authority", "call_local", "reliable")
 func spawn_enemy(id: int, enemy_type: Constants.ENEMIES, position: Vector2, layout_id: int):
-	print("spawn on %s,%s" % [layout_id, multiplayer.get_unique_id()])
 	var enemy: Enemy = Enemy.from_data(load(Constants.enemy_map[enemy_type]), id)
-	enemy.position = position
 	Gamestate.loaded_layouts[layout_id].add_enemy(enemy)
+	enemy.position = position
 
 @rpc("authority", "call_local", "reliable")
 func trigger_enemy_attack(id: int, target_id: int):

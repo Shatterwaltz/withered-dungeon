@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_uyxeu")
 enemy_pool = Array[int]([0])
-layout_pool = Array[int]([0])
+layout_pool = Array[int]([0, 1])
 min_enemies = 1
 max_enemies = 3
 metadata/_custom_type_script = "uid://d30c7p4eueeli"

@@ -12,10 +12,10 @@ var remaining_enemies: int = 0
 var next_layout_id: int = -1
 
 # factory function
-static func from_data(level_data: LevelData, layout_id: int) -> Layout:
+static func from_data(level_data: LevelData, layout_index: int, layout_id: int) -> Layout:
 	# clients should only need the selected layout to load, enemies will be synced naturally
-	var selected_layout: Constants.LAYOUTS = level_data.layout_pool.pick_random()
-	var layout: Layout = load(Constants.layout_map[selected_layout]).instantiate()
+	var selected_layout_uid: String = Constants.default_layouts[layout_index]
+	var layout: Layout = load(selected_layout_uid).instantiate()
 	layout.target_enemy_count = randi_range(level_data.min_enemies, level_data.max_enemies)
 	layout.next_level = level_data.next_level
 	layout.id = layout_id
@@ -30,15 +30,18 @@ func _ready() -> void:
 		assert(tilemap != null, "%s has no tilemap layer" % self.name)
 		assert(exit_box != null, "%s has no exit box" % self.name)
 		var enemy_spawns: Array[Node] = enemy_spawn_parent.get_children()
+		print(name)
 		if Gamestate.players.size() == 0:
+			print('spawning players on %s' % id)
 			for player_id in Network.players.keys():
-				ToClientRpcs.spawn_player.rpc(player_id, player_spawn.position)
+				ToClientRpcs.spawn_player.rpc(player_id, player_spawn.global_position)
 		for i in range(target_enemy_count):
 			if enemy_spawns.size() < 1:
 				break
 			var spawn_point_index: int = randi_range(0, enemy_spawns.size() - 1)
 			# TODO: randomize the enemy choice here
 			var enemy_id: int = Utils.generate_id()
+			print(enemy_spawns[spawn_point_index].global_position)
 			ToClientRpcs.spawn_enemy.rpc(enemy_id, Constants.ENEMIES.GOBLIN, enemy_spawns[spawn_point_index].position, id)
 			enemy_spawns.remove_at(spawn_point_index)
 
@@ -52,7 +55,7 @@ func activate_room():
 	if Network.is_server:
 		var next_id: int = Utils.generate_id()
 		ToClientRpcs.set_layout_connection.rpc(id, next_id)
-		ToClientRpcs.load_level.rpc(next_level, next_layout_id)
+		ToClientRpcs.load_level.rpc(next_level, randi_range(0, Constants.default_layouts.size() - 1), next_layout_id)
 	#TODO: set up active/inactive enemy states
 
 func _on_enemy_death(_id: int):
@@ -62,7 +65,5 @@ func _on_enemy_death(_id: int):
 	#TODO: Unlock exit to next level
 
 func _on_exit_overlap(body):
-	print(next_layout_id)
-	print(remaining_enemies)
 	if body is Player && remaining_enemies <= 0:
 		body.position = Gamestate.loaded_layouts[next_layout_id].player_spawn.global_position

@@ -30,9 +30,13 @@ static var level_map: Dictionary[LEVELS, String] = {
 }
 
 enum LAYOUTS {
-	DEBUG_DUNGEON
+	DEBUG_DUNGEON,
+	LAYOUT_2
 }
 
 static var layout_map: Dictionary[LAYOUTS, String] = {
-	LAYOUTS.DEBUG_DUNGEON: "uid://dbm0qqk021s52"
+	LAYOUTS.DEBUG_DUNGEON: "uid://dbm0qqk021s52",
+	LAYOUTS.LAYOUT_2: "uid://md3e2et8l55h"
 }
+
+static var default_layouts: Array[String] = ["uid://dbm0qqk021s52", "uid://md3e2et8l55h"]
