@@ -14,29 +14,26 @@ static var weapon_map: Dictionary[WEAPONS, String] = {
 }
 
 enum ENEMIES {
-	GOBLIN
+	GOBLIN,
+	BINGOL
 }
 
 static var enemy_map: Dictionary[ENEMIES, String] = {
-	ENEMIES.GOBLIN: "uid://22rvn5syg5ku"
+	ENEMIES.GOBLIN: "uid://22rvn5syg5ku",
+	ENEMIES.BINGOL: "uid://b4jey0jh1kdwn"
 }
 
 enum LEVELS {
-	DEBUG_LEVEL
+	DEBUG_LEVEL,
+	HERE_BE_BINGOLS
 }
 
 static var level_map: Dictionary[LEVELS, String] = {
-	LEVELS.DEBUG_LEVEL: "uid://b44cymtw8l0qw"
+	LEVELS.DEBUG_LEVEL: "uid://b44cymtw8l0qw",
+	LEVELS.HERE_BE_BINGOLS: "uid://cguvetcp5s7sb"
 }
 
-enum LAYOUTS {
-	DEBUG_DUNGEON,
-	LAYOUT_2
-}
-
-static var layout_map: Dictionary[LAYOUTS, String] = {
-	LAYOUTS.DEBUG_DUNGEON: "uid://dbm0qqk021s52",
-	LAYOUTS.LAYOUT_2: "uid://md3e2et8l55h"
-}
-
-static var default_layouts: Array[String] = ["uid://dbm0qqk021s52", "uid://md3e2et8l55h"]
+static var default_layouts: Array[String] = [
+	"uid://dbm0qqk021s52",
+	"uid://md3e2et8l55h"
+]
