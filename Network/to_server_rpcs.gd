@@ -21,4 +21,4 @@ func swap_weapon(new_weapon: Constants.WEAPONS):
 
 @rpc("any_peer", "reliable")
 func damage_enemy(id: int, damage: int):
-	ToClientRpcs.damage_enemy.rpc(id, damage)
+	ToClientRpcs.damage_enemy.rpc(id, damage, multiplayer.get_remote_sender_id())

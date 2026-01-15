@@ -19,6 +19,7 @@ var attack_rate: float
 var attack_timer: float = 0
 var sprite_tex: Texture2D
 var collision_shape: RectangleShape2D
+var movement_component: MovementComponent
 
 # Node refs
 @onready var sprite: Sprite2D = $Sprite2D
@@ -33,6 +34,8 @@ static func from_data(enemy_data: EnemyData, p_id: int) -> Enemy:
 	enemy.attack = enemy_data.attack
 	enemy.attack_rate = enemy_data.attack_rate
 	enemy.sprite_tex = enemy_data.sprite
+	enemy.movement_component = enemy_data.movement_component.instantiate()
+	enemy.add_child(enemy.movement_component)
 	var hitbox_shape: RectangleShape2D = RectangleShape2D.new()
 	hitbox_shape.size = enemy_data.size
 	enemy.collision_shape = hitbox_shape
@@ -53,13 +56,17 @@ func _physics_process(delta):
 		if attack_timer >= attack_rate:
 			attack_timer = 0
 			ToClientRpcs.trigger_enemy_attack.rpc(id, target.network_data.id)
+	velocity = movement_component.get_movement(target)
+	move_and_slide()
 
 func trigger_attack(p_target: Player):
 	var attack_scene: Attack = attack.instantiate()
 	attack_scene.target = p_target
 	add_child(attack_scene)
 
-func take_damage(damage: int):
+func take_damage(damage: int, attacker_id: int):
+	if Gamestate.players.has(attacker_id):
+		target = Gamestate.players[attacker_id]
 	hp = clampi(hp - damage, 0, Constants.BIG_INT)
 	if hp <= 0 && !is_puppet:
 		print('dying')

@@ -7,6 +7,8 @@ class_name EnemyData
 @export var movespeed: float = 500
 # scene containing attack logic
 @export var attack: PackedScene
+# movement component
+@export var movement_component: PackedScene
 # time in seconds between attack triggers
 @export var attack_rate: float = 5
 # sprite texture

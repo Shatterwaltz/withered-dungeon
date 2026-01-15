@@ -82,6 +82,6 @@ func trigger_enemy_death(id: int):
 		Gamestate.enemies[id].die()
 
 @rpc("authority", "call_local", "reliable")
-func damage_enemy(id: int, damage: int):
+func damage_enemy(id: int, damage: int, attacker_id: int):
 	if Gamestate.enemies.has(id):
-		Gamestate.enemies[id].take_damage(damage)
+		Gamestate.enemies[id].take_damage(damage, attacker_id)

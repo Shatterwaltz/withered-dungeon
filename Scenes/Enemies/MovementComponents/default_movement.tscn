@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgsdwjuijyvkx"]
+
+[ext_resource type="Script" uid="uid://d3ec24trw1p2j" path="res://Scripts/Enemies/movement_component.gd" id="1_1ie5a"]
+
+[node name="DefaultMovement" type="Node"]
+script = ExtResource("1_1ie5a")
+metadata/_custom_type_script = "uid://d3ec24trw1p2j"
