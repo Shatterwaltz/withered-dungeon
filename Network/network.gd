@@ -68,5 +68,7 @@ func toggle_ready(player_id: int) -> void:
 
 func start_game():
 	## Game start logic
+	ToClientRpcs.unload_scene.rpc()
 	ToClientRpcs.set_seed.rpc(Gamestate.seed_val)
-	ToClientRpcs.change_scene.rpc()
+	ToClientRpcs.load_level.rpc(Constants.LEVELS.DEBUG_LEVEL, randi_range(0, Constants.default_layouts.size() - 1), Utils.generate_id())
+	ToClientRpcs.activate_layout.rpc(Gamestate.loaded_layouts.values()[0].id)

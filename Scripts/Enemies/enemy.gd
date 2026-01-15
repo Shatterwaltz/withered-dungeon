@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name Enemy
 
+signal enemy_died(id: int)
+
 # scene for factory function
 const ENEMY: PackedScene = preload("uid://kjpcet4hpt5j")
 
@@ -59,11 +61,11 @@ func trigger_attack(p_target: Player):
 
 func take_damage(damage: int):
 	hp = clampi(hp - damage, 0, Constants.BIG_INT)
-	print(hp)
 	if hp <= 0 && !is_puppet:
 		print('dying')
 		ToClientRpcs.trigger_enemy_death.rpc(id)
 
 func die():
 	Gamestate.enemies.erase(id)
+	enemy_died.emit(id)
 	queue_free()

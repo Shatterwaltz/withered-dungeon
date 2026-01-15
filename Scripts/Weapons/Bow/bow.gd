@@ -1,6 +1,6 @@
 extends Weapon
 
-const ARROW: PackedScene = preload("uid://br0p2feb7uqby")
+const ARROW: PackedScene = preload("uid://bliarg8aa15e2")
 
 func fire(target: Vector2):
 	var arrow: Arrow = ARROW.instantiate() as Arrow
