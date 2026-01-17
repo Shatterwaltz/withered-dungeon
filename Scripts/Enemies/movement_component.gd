@@ -11,5 +11,5 @@ func _ready():
 func get_movement(target: Player) -> Vector2:
 	var movement: Vector2 = Vector2.ZERO
 	if target:
-		movement = (target.global_position - parent_enemy.global_position) * parent_enemy.movespeed
+		movement = (target.global_position - parent_enemy.global_position).normalized() * parent_enemy.movespeed
 	return movement

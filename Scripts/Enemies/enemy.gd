@@ -20,6 +20,13 @@ var attack_timer: float = 0
 var sprite_tex: Texture2D
 var collision_shape: RectangleShape2D
 var movement_component: MovementComponent
+# how much aggro each player has built up on this enemy
+var aggro_build: Dictionary[int, int] = {}
+# time in seconds between aggro updates
+var aggro_update_rate: float = 10
+var aggro_update_timer: float = 0
+## Aggro threshold a player must beat to take aggro
+var aggro_threshold: int = 0
 
 # Node refs
 @onready var sprite: Sprite2D = $Sprite2D
@@ -47,17 +54,48 @@ func _ready():
 	Gamestate.enemies[id] = self
 	sprite.texture = sprite_tex
 	hitbox.shape = collision_shape
-	if !is_puppet:
-		target = Gamestate.players.values().pick_random()
+	for player_id in Gamestate.players.keys():
+		aggro_build[player_id] = 0
 
 func _physics_process(delta):
 	if !is_puppet:
+		aggro_update_timer += delta
+		if aggro_update_timer >= aggro_update_rate:
+			aggro_update_timer -= aggro_update_rate
+			_reset_aggro_buildup()
+			# decay threshold by 90% each reset cycle
+			aggro_threshold = floori(.9 * aggro_threshold)
 		attack_timer += delta
 		if attack_timer >= attack_rate:
-			attack_timer = 0
-			ToClientRpcs.trigger_enemy_attack.rpc(id, target.network_data.id)
+			attack_timer -= attack_rate
+			if target:
+				ToClientRpcs.trigger_enemy_attack.rpc(id, target.network_data.id)
 	velocity = movement_component.get_movement(target)
 	move_and_slide()
+
+## check for new aggro target and reset aggro buildup of each player
+func _update_aggro():
+	if !is_puppet:
+		var new_target_id: int = -1
+		if target:
+			new_target_id = target.network_data.id
+		for player_id in aggro_build.keys():
+			if aggro_build[player_id] > aggro_threshold:
+				new_target_id = player_id
+				aggro_threshold = aggro_build[player_id]
+		if new_target_id != -1:
+			if target && target.network_data.id == new_target_id:
+				return
+			elif !target:
+				## Give first person to hit bonus aggro
+				aggro_threshold = aggro_build[new_target_id] * 3
+			ToClientRpcs.update_enemy_target.rpc(id, new_target_id)
+			# Reset aggro buildup when it acquires a new target to prevent pingponging
+			_reset_aggro_buildup()
+
+func _reset_aggro_buildup():
+	for player_id in aggro_build.keys():
+		aggro_build[player_id] = 0
 
 func trigger_attack(p_target: Player):
 	var attack_scene: Attack = attack.instantiate()
@@ -65,12 +103,13 @@ func trigger_attack(p_target: Player):
 	add_child(attack_scene)
 
 func take_damage(damage: int, attacker_id: int):
-	if Gamestate.players.has(attacker_id):
-		target = Gamestate.players[attacker_id]
 	hp = clampi(hp - damage, 0, Constants.BIG_INT)
-	if hp <= 0 && !is_puppet:
-		print('dying')
-		ToClientRpcs.trigger_enemy_death.rpc(id)
+	aggro_build[attacker_id] += damage
+	if !is_puppet:
+		if hp <= 0:
+			ToClientRpcs.trigger_enemy_death.rpc(id)
+		else:
+			_update_aggro()
 
 func die():
 	Gamestate.enemies.erase(id)

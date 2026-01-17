@@ -7,7 +7,7 @@
 
 [resource]
 script = ExtResource("1_661rc")
-hp = 15
+hp = 500
 attack = ExtResource("1_fq2no")
 movement_component = ExtResource("2_cptu3")
 sprite = ExtResource("3_dhdi6")

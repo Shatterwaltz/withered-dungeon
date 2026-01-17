@@ -72,6 +72,12 @@ func spawn_enemy(id: int, enemy_type: Constants.ENEMIES, position: Vector2, layo
 	Gamestate.loaded_layouts[layout_id].add_enemy(enemy)
 
 @rpc("authority", "call_local", "reliable")
+func update_enemy_target(enemy_id: int, target_id: int):
+	var enemy: Enemy = Gamestate.enemies.get(enemy_id)
+	if enemy:
+		enemy.target = Gamestate.players.get(target_id)
+
+@rpc("authority", "call_local", "reliable")
 func trigger_enemy_attack(id: int, target_id: int):
 	if Gamestate.enemies.has(id):
 		Gamestate.enemies[id].trigger_attack(Gamestate.players[target_id])

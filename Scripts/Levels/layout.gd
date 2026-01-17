@@ -33,9 +33,7 @@ func _ready() -> void:
 		assert(tilemap != null, "%s has no tilemap layer" % self.name)
 		assert(exit_box != null, "%s has no exit box" % self.name)
 		var enemy_spawns: Array[Node] = enemy_spawn_parent.get_children()
-		print(name)
 		if Gamestate.players.size() == 0:
-			print('spawning players on %s' % id)
 			for player_id in Network.players.keys():
 				ToClientRpcs.spawn_player.rpc(player_id, player_spawn.global_position)
 		for i in range(target_enemy_count):
